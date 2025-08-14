@@ -1,0 +1,3 @@
+# BuffrSign API
+
+FastAPI placeholder.
