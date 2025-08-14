@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global adjustments per BuffrSign design */
+html, body {
+  height: 100%;
+}
+

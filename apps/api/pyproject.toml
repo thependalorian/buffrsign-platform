@@ -1,12 +1,18 @@
 [project]
 name = "buffrsign-api"
 version = "0.1.0"
-description = "BuffrSign FastAPI placeholder"
+description = "BuffrSign FastAPI service with optional LlamaIndex integration"
 requires-python = ">=3.10"
 dependencies = [
   "fastapi~=0.111",
-  "uvicorn[standard]~=0.30"
+  "uvicorn[standard]~=0.30",
+  "llama-index-core>=0.10.50",
+  "llama-index-readers-file>=0.1.20",
+  "pypdf>=4.2.0"
 ]
+
+# Needed for FastAPI file uploads (UploadFile)
+"python-multipart" = ">=0.0.9"
 
 [tool.uvicorn]
 factory = true
