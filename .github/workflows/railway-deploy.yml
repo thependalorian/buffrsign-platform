@@ -1,0 +1,34 @@
+name: railway-deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node (for Railway CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Railway CLI
+        run: npm i -g @railway/cli
+
+      - name: Deploy Backend (placeholder)
+        working-directory: apps/api
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          # Ensure your Railway project/services are configured to this repo/dir
+          # Example: railway up --service buffrsign-backend
+          railway status || true
+          echo "Run 'railway link' locally to bind project/service, then this step can run 'railway up' in CI."
+          echo "Using container image from GHCR is recommended for production."
