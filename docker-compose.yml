@@ -1,58 +1,147 @@
 version: '3.8'
 
 services:
-  frontend:
+  # BuffrSign API Service
+  buffrsign-api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    container_name: buffrsign-api
+    restart: always
+    ports:
+      - "8003:8003"
+    environment:
+      # Environment Configuration
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - BUFFRSIGN_API_KEY=${BUFFRSIGN_API_KEY}
+      
+      # Domain Configuration
+      - DOMAIN=sign.buffr.ai
+      - API_URL=https://api.sign.buffr.ai
+      - FRONTEND_URL=https://sign.buffr.ai
+      - CORS_ORIGINS=${CORS_ORIGINS:-https://sign.buffr.ai,https://www.sign.buffr.ai,http://localhost:3000}
+      
+      # Database Configuration
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      
+      # AI Configuration
+      - LLAMAINDEX_ENABLE=${LLAMAINDEX_ENABLE:-1}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4}
+      - OPENAI_EMBEDDING_MODEL=${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
+      - OPENAI_TEMPERATURE=${OPENAI_TEMPERATURE:-0.1}
+      
+      # Security Configuration
+      - JWT_SECRET=${JWT_SECRET}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - HASH_SALT_ROUNDS=${HASH_SALT_ROUNDS:-12}
+      
+      # Email Configuration
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      
+      # File Upload Configuration
+      - MAX_FILE_SIZE=${MAX_FILE_SIZE:-10485760}  # 10MB
+      - UPLOAD_DIR=${UPLOAD_DIR:-/app/uploads}
+      
+      # Rate Limiting
+      - RATE_LIMIT_REQUESTS=${RATE_LIMIT_REQUESTS:-100}
+      - RATE_LIMIT_WINDOW=${RATE_LIMIT_WINDOW:-3600}
+      
+      # Feature Flags
+      - ENABLE_AI_FEATURES=${ENABLE_AI_FEATURES:-true}
+      - ENABLE_SMART_TEMPLATES=${ENABLE_SMART_TEMPLATES:-true}
+      - ENABLE_COMPLIANCE_AI=${ENABLE_COMPLIANCE_AI:-true}
+      - ENABLE_DOCUMENT_INTELLIGENCE=${ENABLE_DOCUMENT_INTELLIGENCE:-true}
+      
+      # Monitoring
+      - SENTRY_DSN=${SENTRY_DSN}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    volumes:
+      - buffrsign-uploads:/app/uploads
+      - buffrsign-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8003/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - buffrsign-network
+
+  # BuffrSign Frontend Service
+  buffrsign-frontend:
     build:
       context: ./apps/web
       dockerfile: Dockerfile
-    environment:
-      - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    container_name: buffrsign-frontend
+    restart: always
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
-
-  backend:
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile
     environment:
-      - NODE_ENV=development
-      - DATABASE_URL=postgresql://buffrsign:password@postgres:5432/buffrsign
-      - REDIS_URL=redis://redis:6379
-    ports:
-      - "8000:8000"
+      - NODE_ENV=${NODE_ENV:-production}
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_API_KEY=${NEXT_PUBLIC_API_KEY}
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - buffrsign-network
     depends_on:
-      - postgres
-      - redis
+      - buffrsign-api
 
-  postgres:
-    image: postgres:15
-    environment:
-      - POSTGRES_DB=buffrsign
-      - POSTGRES_USER=buffrsign
-      - POSTGRES_PASSWORD=password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - ./infrastructure/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  # Caddy Reverse Proxy
+  caddy:
+    image: caddy:2-alpine
+    container_name: buffrsign-caddy
+    restart: always
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - AGENT_API_HOSTNAME=${AGENT_API_HOSTNAME:-api.sign.buffr.ai}
+      - FRONTEND_HOSTNAME=${FRONTEND_HOSTNAME:-sign.buffr.ai}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - buffrsign-network
     depends_on:
-      - frontend
-      - backend
+      - buffrsign-api
+      - buffrsign-frontend
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:2019/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+networks:
+  buffrsign-network:
+    driver: bridge
 
 volumes:
-  postgres_data:
+  buffrsign-uploads:
+  buffrsign-logs:
+  caddy-data:
+  caddy-config:

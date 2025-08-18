@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pydantic
+python-jose[cryptography]
+passlib[bcrypt]
+python-bcrypt
+PyJWT
+python-dotenv
+PyPDF2
+PyMuPDF
+llama-index
+openai
+gunicorn
+pytest
+requests

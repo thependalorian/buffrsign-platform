@@ -85,6 +85,9 @@ BuffrSign Signature Types:
 - **Accessibility Standards**: Section 19 usability requirements
 - **Retention Compliance**: Section 24 electronic record standards
 
+### 3.4 Knowledge Base
+The BuffrSign platform includes a comprehensive legal knowledge base that powers its AI features and ensures compliance with Namibian and regional laws. The knowledge base contains a wide range of legal documents, including the Electronic Transactions Act 2019, CRAN requirements, and other relevant legislation. This knowledge base is integrated with the LlamaIndex to provide a powerful semantic search and retrieval engine, which forms the foundation for the platform's AI-powered features.
+
 ## 4. Functional Requirements
 
 ### 4.1 Core BuffrSign Features

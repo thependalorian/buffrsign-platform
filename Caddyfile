@@ -1,0 +1,68 @@
+{
+    email {$LETSENCRYPT_EMAIL}
+    auto_https disable_redirects
+}
+
+# BuffrSign API
+{$AGENT_API_HOSTNAME} {
+    request_body {
+        max_size 10MB
+    }
+
+    # API routes
+    handle_path /api/* {
+        reverse_proxy buffrsign-api:8003
+    }
+
+    # Health check
+    handle /health {
+        reverse_proxy buffrsign-api:8003
+    }
+
+    # API documentation
+    handle /docs {
+        reverse_proxy buffrsign-api:8003
+    }
+
+    # OpenAPI spec
+    handle /openapi.json {
+        reverse_proxy buffrsign-api:8003
+    }
+}
+
+# BuffrSign Frontend
+{$FRONTEND_HOSTNAME} {
+    request_body {
+        max_size 10MB
+    }
+
+    # Proxy API requests from frontend
+    handle_path /api/* {
+        reverse_proxy buffrsign-api:8003
+    }
+
+    # Serve frontend app
+    handle {
+        reverse_proxy buffrsign-frontend:3000
+    }
+}
+
+# Marketing site (root domain)
+buffr.ai {
+    request_body {
+        max_size 10MB
+    }
+
+    # Redirect to marketing site or serve static content
+    redir https://www.buffr.ai{uri} permanent
+}
+
+# www subdomain for marketing
+www.buffr.ai {
+    request_body {
+        max_size 10MB
+    }
+
+    # Serve marketing site or redirect to sign.buffr.ai
+    redir https://sign.buffr.ai{uri} permanent
+}

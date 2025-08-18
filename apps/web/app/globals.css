@@ -2,8 +2,376 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global adjustments per BuffrSign design */
-html, body {
-  height: 100%;
+/* =============================================================================
+   BUFFRSIGN GLOBAL STYLES
+   ============================================================================= */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Base Typography */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variation-settings: normal;
+  }
+
+  body {
+    @apply bg-white text-gray-900 font-primary;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Heading Styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-secondary font-semibold text-gray-900;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+
+  h6 {
+    @apply text-base md:text-lg;
+  }
+
+  /* Paragraph Styles */
+  p {
+    @apply text-base leading-relaxed text-gray-700;
+  }
+
+  /* Link Styles */
+  a {
+    @apply text-brand-blue-600 hover:text-brand-blue-700 transition-colors duration-200;
+  }
+
+  /* Focus Styles for Accessibility */
+  *:focus {
+    @apply outline-none ring-2 ring-brand-blue-500 ring-offset-2;
+  }
+
+  /* Selection Styles */
+  ::selection {
+    @apply bg-brand-blue-100 text-brand-blue-900;
+  }
+}
+
+/* Component Styles */
+@layer components {
+  /* BuffrSign Button Variants */
+  .btn-buffrsign-primary {
+    @apply btn-primary bg-brand-blue-600 hover:bg-brand-blue-700 text-white font-medium px-6 py-3 rounded-md transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-buffrsign-secondary {
+    @apply btn-secondary bg-transparent border-2 border-brand-blue-600 text-brand-blue-600 hover:bg-brand-blue-50 font-medium px-6 py-3 rounded-md transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-buffrsign-ghost {
+    @apply bg-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-medium px-4 py-2 rounded-md transition-all duration-200;
+  }
+
+  /* BuffrSign Card Styles */
+  .card-buffrsign {
+    @apply bg-white rounded-lg shadow-card hover:shadow-elevated transition-all duration-300 border border-gray-100;
+  }
+
+  .card-buffrsign-interactive {
+    @apply card-buffrsign cursor-pointer hover:-translate-y-1 hover:shadow-elevated;
+  }
+
+  /* BuffrSign Form Styles */
+  .form-buffrsign {
+    @apply space-y-6;
+  }
+
+  .form-group-buffrsign {
+    @apply space-y-2;
+  }
+
+  .input-buffrsign {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-md text-base transition-all duration-200 focus:border-brand-blue-500 focus:ring-2 focus:ring-brand-blue-100 focus:outline-none;
+  }
+
+  .input-buffrsign-error {
+    @apply input-buffrsign border-error focus:border-error focus:ring-error/20;
+  }
+
+  .label-buffrsign {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+  }
+
+  /* BuffrSign Status Badges */
+  .badge-buffrsign {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-buffrsign-success {
+    @apply badge-buffrsign bg-success text-white;
+  }
+
+  .badge-buffrsign-warning {
+    @apply badge-buffrsign bg-warning text-white;
+  }
+
+  .badge-buffrsign-error {
+    @apply badge-buffrsign bg-error text-white;
+  }
+
+  .badge-buffrsign-info {
+    @apply badge-buffrsign bg-info text-white;
+  }
+
+  /* BuffrSign Progress Steps */
+  .progress-steps-buffrsign {
+    @apply flex items-center justify-between mb-8;
+  }
+
+  .step-buffrsign {
+    @apply flex items-center gap-2;
+  }
+
+  .step-buffrsign-active {
+    @apply step-buffrsign text-brand-blue-600 font-semibold;
+  }
+
+  .step-buffrsign-completed {
+    @apply step-buffrsign text-success;
+  }
+
+  .step-buffrsign-pending {
+    @apply step-buffrsign text-gray-400;
+  }
+
+  /* BuffrSign Signature Field */
+  .signature-field-buffrsign {
+    @apply border-2 border-dashed border-brand-blue-200 rounded-md p-4 cursor-pointer transition-all duration-200 hover:border-brand-blue-400 hover:bg-brand-blue-50;
+  }
+
+  .signature-field-buffrsign-filled {
+    @apply signature-field-buffrsign border-success bg-success text-white;
+  }
+
+  .signature-field-buffrsign-required {
+    @apply signature-field-buffrsign border-error bg-error text-white;
+  }
+
+  /* BuffrSign Compliance Indicator */
+  .compliance-indicator-buffrsign {
+    @apply inline-flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium;
+  }
+
+  .compliance-indicator-buffrsign-compliant {
+    @apply compliance-indicator-buffrsign bg-success text-white;
+  }
+
+  .compliance-indicator-buffrsign-needs-review {
+    @apply compliance-indicator-buffrsign bg-warning text-white;
+  }
+
+  .compliance-indicator-buffrsign-non-compliant {
+    @apply compliance-indicator-buffrsign bg-error text-white;
+  }
+
+  /* BuffrSign Document Card */
+  .document-card-buffrsign {
+    @apply flex items-center p-6 bg-white rounded-lg shadow-card transition-all duration-300 hover:shadow-elevated hover:-translate-y-1;
+  }
+
+  /* BuffrSign Navigation */
+  .nav-buffrsign {
+    @apply bg-white border-b border-gray-200 shadow-sm;
+  }
+
+  .nav-link-buffrsign {
+    @apply px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-all duration-200;
+  }
+
+  .nav-link-buffrsign-active {
+    @apply nav-link-buffrsign text-brand-blue-600 bg-brand-blue-50 font-medium;
+  }
+
+  /* BuffrSign Sidebar */
+  .sidebar-buffrsign {
+    @apply bg-white border-r border-gray-200 shadow-sm;
+  }
+
+  .sidebar-item-buffrsign {
+    @apply flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-all duration-200;
+  }
+
+  .sidebar-item-buffrsign-active {
+    @apply sidebar-item-buffrsign text-brand-blue-600 bg-brand-blue-50 font-medium;
+  }
+
+  /* BuffrSign Dashboard Widgets */
+  .widget-buffrsign {
+    @apply card-buffrsign p-6;
+  }
+
+  .widget-buffrsign-stats {
+    @apply widget-buffrsign text-center;
+  }
+
+  .widget-buffrsign-chart {
+    @apply widget-buffrsign;
+  }
+
+  /* BuffrSign Loading States */
+  .loading-buffrsign {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  .skeleton-buffrsign {
+    @apply loading-buffrsign;
+  }
+
+  /* BuffrSign Cultural Accents */
+  .accent-desert {
+    @apply bg-gradient-to-br from-desert-sand to-namibian-gold-300;
+  }
+
+  .accent-savanna {
+    @apply bg-gradient-to-br from-savanna-green to-success;
+  }
+
+  .accent-sunset {
+    @apply bg-gradient-to-br from-sunset-orange to-namibian-gold-500;
+  }
+}
+
+/* Utility Styles */
+@layer utilities {
+  /* Text Gradients */
+  .text-gradient-desert {
+    @apply bg-gradient-to-r from-desert-sand to-namibian-gold-500 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-savanna {
+    @apply bg-gradient-to-r from-savanna-green to-success bg-clip-text text-transparent;
+  }
+
+  .text-gradient-sunset {
+    @apply bg-gradient-to-r from-sunset-orange to-namibian-gold-500 bg-clip-text text-transparent;
+  }
+
+  /* Custom Scrollbar */
+  .scrollbar-buffrsign {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') transparent;
+  }
+
+  .scrollbar-buffrsign::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-buffrsign::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-buffrsign::-webkit-scrollbar-thumb {
+    background-color: theme('colors.gray.300');
+    border-radius: 3px;
+  }
+
+  .scrollbar-buffrsign::-webkit-scrollbar-thumb:hover {
+    background-color: theme('colors.gray.400');
+  }
+
+  /* Focus Visible for Better Accessibility */
+  .focus-visible-buffrsign:focus-visible {
+    @apply outline-none ring-2 ring-brand-blue-500 ring-offset-2;
+  }
+
+  /* Print Styles */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .dark {
+    @apply bg-slate-900 text-slate-100;
+  }
+
+  .dark .card-buffrsign {
+    @apply bg-slate-800 border-slate-700;
+  }
+
+  .dark .input-buffrsign {
+    @apply bg-slate-800 border-slate-600 text-slate-100;
+  }
+
+  .dark .nav-buffrsign {
+    @apply bg-slate-800 border-slate-700;
+  }
+
+  .dark .sidebar-buffrsign {
+    @apply bg-slate-800 border-slate-700;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
