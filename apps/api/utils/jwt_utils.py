@@ -69,7 +69,7 @@ def verify_token(token: str) -> Dict[str, Any]:
         if token.startswith("Bearer "):
             token = token[7:]
         
-        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM], audience="authenticated")
         
         # Validate required fields
         required_fields = ["sub", "exp", "iat", "iss", "aud"]
@@ -94,7 +94,7 @@ def verify_token(token: str) -> Dict[str, Any]:
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token has expired"
         )
-    except jwt.JWTError as e:
+    except jwt.InvalidTokenError as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid token: {str(e)}"

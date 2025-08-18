@@ -1,52 +1,66 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
-  "buildCommand": "cd apps/web && npm run build",
-  "outputDirectory": "apps/web/.next",
-  "installCommand": "npm install",
+  "version": 2,
+  "name": "buffrsign-platform",
+  "builds": [
+    {
+      "src": "apps/web/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/apps/web/$1"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "@buffrsign-api-url",
+    "NEXT_PUBLIC_SUPABASE_URL": "@buffrsign-supabase-url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@buffrsign-supabase-anon-key"
+  },
   "functions": {
     "apps/web/app/api/**/*.ts": {
-      "memory": 1024,
       "maxDuration": 30
     }
   },
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "NEXT_PUBLIC_API_URL": "@api_url",
-    "NEXT_PUBLIC_API_KEY": "@api_key"
-  },
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
-      "NEXT_PUBLIC_API_URL": "@api_url"
-    }
-  },
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/dashboard",
-      "permanent": false
-    }
-  ],
   "headers": [
     {
-      "source": "/api/(.*)",
+      "source": "/(.*)",
       "headers": [
         {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
+          "key": "X-Frame-Options",
+          "value": "DENY"
         },
         {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
         },
         {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/docs",
+      "destination": "/api/docs",
+      "permanent": false
     }
   ]
 }

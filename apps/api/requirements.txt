@@ -1,15 +1,85 @@
-fastapi
-uvicorn
-pydantic
-python-jose[cryptography]
-passlib[bcrypt]
-python-bcrypt
-PyJWT
-python-dotenv
-PyPDF2
-PyMuPDF
-llama-index
-openai
-gunicorn
-pytest
-requests
+# FastAPI and ASGI server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# Data validation and serialization
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Authentication and security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-bcrypt==4.1.2
+PyJWT==2.8.0
+python-multipart==0.0.6
+
+# Environment and configuration
+python-dotenv==1.0.0
+
+# Database and ORM
+supabase==2.0.2
+asyncpg==0.29.0
+sqlalchemy==2.0.23
+
+# Redis for caching and sessions
+redis==5.0.1
+aioredis==2.0.1
+
+# File processing
+PyPDF2==3.0.1
+PyMuPDF==1.23.8
+Pillow==10.1.0
+
+# AI and machine learning
+llama-index==0.9.8
+openai==1.3.7
+langchain==0.0.350
+
+# HTTP client
+httpx==0.25.2
+aiohttp==3.9.1
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2023.3
+cryptography==41.0.8
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Development
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+
+# Monitoring and logging
+structlog==23.2.0
+sentry-sdk[fastapi]==1.38.0
+
+# WebSocket support
+websockets==12.0
+
+# Background tasks
+celery==5.3.4
+redis==5.0.1
+
+# Email
+aiosmtplib==3.0.1
+
+# Image processing
+Pillow==10.1.0
+
+# PDF processing
+reportlab==4.0.7
+
+# XML processing
+lxml==4.9.3
+
+# Data validation
+email-validator==2.1.0
+
+# CORS
+fastapi-cors==0.0.6

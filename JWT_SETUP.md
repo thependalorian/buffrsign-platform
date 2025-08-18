@@ -1,8 +1,7 @@
 # BuffrSign JWT Setup Guide
 
 ## 🚨 IMPORTANT: JWT Secret Configuration
-
-The JWT secret you provided (`4yZx0coXqam1Vx2DTFNlO+yqFXwYbVRicU0nXOb28k/fO7yaz1Ac/iXOJJI+9zI0yZHPo3j1KN1nWIXPEO+E9g==`) has been **removed from the code** and must now be configured via environment variables.
+) has been **removed from the code** and must now be configured via environment variables.
 
 ## ✅ Security Fix Applied
 
@@ -21,7 +20,7 @@ cp .env.example .env
 Edit the `.env` file and add your JWT secret:
 ```bash
 # JWT Configuration
-JWT_SECRET=4yZx0coXqam1Vx2DTFNlO+yqFXwYbVRicU0nXOb28k/fO7yaz1Ac/iXOJJI+9zI0yZHPo3j1KN1nWIXPEO+E9g==
+JWT_SECRET=
 JWT_EXPIRY_HOURS=24
 ```
 
