@@ -1,428 +1,433 @@
-# BuffrSign Platform
+# 🚀 BuffrSign Platform
 
-> **Digital Signature Platform for Namibia and Southern Africa**
-> 
-> Fully compliant with Namibia's Electronic Transactions Act 4 of 2019 and designed for CRAN accreditation.
+> **AI-Powered Digital Signature Platform for Namibia & SADC Region**
 
-## 🚀 Project Overview
+BuffrSign is a comprehensive digital signature platform specifically designed for the Namibian and SADC regional market, featuring AI-powered document analysis, ETA 2019 compliance, and multi-party workflow optimization.
 
-BuffrSign is a comprehensive digital signature platform specifically designed to comply with Namibia's Electronic Transactions Act 4 of 2019 and serve the Southern African market. It's positioned as the premier locally-compliant alternative to international solutions like DocuSign.
+![BuffrSign Logo](https://via.placeholder.com/400x100/0066CC/FFFFFF?text=BuffrSign)
 
-### Domains (Wireframes/TRD)
+## 🌟 Key Features
 
-- Marketing site: https://www.buffr.ai
-- Web app: https://www.sign.buffr.ai
-- API: https://www.api.sign.buffr.ai
+### 🤖 AI-Powered Intelligence
+- **Smart Document Analysis**: Automatic document type classification and field detection
+- **Compliance Checking**: Real-time ETA 2019 and SADC compliance validation  
+- **Workflow Optimization**: AI-driven multi-party signing order optimization
+- **Conversational AI**: Interactive assistant for user guidance and support
 
-### Key Features
+### ⚖️ Legal Compliance
+- **ETA 2019 Compliant**: Full compliance with Namibia's Electronic Transactions Act 2019
+- **SADC Framework**: Support for SADC Model Law on Electronic Transactions
+- **CRAN Ready**: Prepared for CRAN accreditation (launching February 2026)
+- **Court Admissible**: Legally binding signatures with comprehensive audit trails
 
-- ✅ **ETA 2019 Compliance** - Full compliance with Electronic Transactions Act
-- ✅ **CRAN Accreditation Ready** - Designed for Communications Regulatory Authority of Namibia
-- ✅ **Advanced Electronic Signatures** - PKI-based signatures with certificates
-- ✅ **Audit Trail System** - Complete activity logging for compliance
-- ✅ **Government Integration** - Ready for Namibian government system integration
-- ✅ **Multi-tenant Architecture** - Support for individual, business, and government users
-- ✅ **AI-Powered Intelligence** - LlamaIndex integration for smart document analysis
-- ✅ **Mobile-First Design** - Responsive design optimized for all devices
+### 📱 Mobile-First Design
+- **Responsive Interface**: Optimized for African mobile usage patterns
+- **Offline Capabilities**: Sign documents even with limited connectivity
+- **Touch-Friendly**: Intuitive signature capture and form filling
+- **Low Bandwidth**: Optimized for slow internet connections
 
-## 📊 Current Status
+### 👥 Multi-Party Workflows
+- **Sequential Signing**: Optimized order for maximum completion rates
+- **Parallel Processing**: Simultaneous signing for urgent documents
+- **Real-Time Tracking**: Live progress updates and notifications
+- **Smart Reminders**: AI-optimized reminder scheduling
 
-### ✅ Completed Components
+### 🛡️ Enterprise Security
+- **End-to-End Encryption**: AES-256 encryption for all documents
+- **PKI Infrastructure**: RSA-2048+ signature validation
+- **Audit Trails**: Comprehensive logging for compliance
+- **Multi-Factor Auth**: Enhanced security for sensitive documents
 
-1. **Database Setup** - Complete Supabase PostgreSQL database with 17 production tables
-2. **Security Implementation** - Row Level Security (RLS) on all tables
-3. **Compliance Framework** - ETA 2019 compliance tracking and CRAN accreditation support
-4. **TypeScript Types** - Generated database types for frontend integration
-5. **Documentation** - Comprehensive setup and migration documentation
-6. **Frontend Application** - Next.js 14 with modern UI/UX and 17 functional pages
-7. **Backend API** - FastAPI with AI integration and comprehensive endpoints
-8. **AI Services** - LlamaIndex-powered document intelligence and compliance checking
-9. **Knowledge Base Creation** - A comprehensive legal knowledge base with Namibian, regional, and international legal documents.
-
-### 🏗️ Architecture
+## 🏗️ Architecture
 
 ```
-BuffrSign Platform
-├── 📱 Frontend (Next.js 14 + TypeScript + DaisyUI)
-├── 🔧 Backend (FastAPI - Python + LlamaIndex AI)
-├── 📱 Mobile (React Native - Ready for development)
-├── 🗄️ Database (Supabase PostgreSQL)
-├── ☁️ Infrastructure (Docker + Kubernetes + Vercel + Railway)
-└── 📚 Documentation
+┌─────────────────────────────────────────────────────────────┐
+│                    Frontend (React)                         │
+├─────────────────────────────────────────────────────────────┤
+│                    API Gateway                              │
+├─────────────────────────────────────────────────────────────┤
+│  AI Agent    │  Document     │  Workflow    │  Compliance   │
+│  (LlamaIndex)│  Processor    │  Optimizer   │  Engine       │
+├─────────────────────────────────────────────────────────────┤
+│              Backend Services (Node.js)                     │
+├─────────────────────────────────────────────────────────────┤
+│  PostgreSQL  │  Redis Cache  │  AWS S3      │  WebSockets   │
+└─────────────────────────────────────────────────────────────┘
 ```
-
-## 🗄️ Database Schema
-
-### Core Tables (6)
-- `users` - User accounts and profiles
-- `documents` - Document storage and metadata
-- `recipients` - Document recipients and signing workflow
-- `signatures` - Digital signatures and certificates
-- `audit_trail` - Complete audit logging for compliance
-- `templates` - Reusable document templates
-
-### CRAN Compliance Tables (5)
-- `cran_accreditation` - CRAN accreditation status and certificates
-- `digital_certificates` - PKI certificates for advanced signatures
-- `eta_compliance` - ETA 2019 compliance verification
-- `security_events` - Security monitoring and threat detection
-- `government_integration` - Government system integrations
-
-### Advanced Features Tables (6)
-- `subscription_plans` - Subscription tiers and pricing
-- `user_subscriptions` - User subscription management
-- `notifications` - User notifications and alerts
-- `document_fields` - Signature field placement and metadata
-- `document_versions` - Document version control
-- `api_keys` - API access management
-
-## 📚 Knowledge Base
-
-The BuffrSign platform includes a comprehensive legal knowledge base that powers its AI features and ensures compliance with Namibian and regional laws. The knowledge base is structured as follows:
-
-### Legal Documents & Knowledge Base Files
-
-*   **Namibian Law:**
-    *   Electronic Transactions Act (ETA) 2019: Full text, annotated sections, and compliance checklists.
-    *   CRAN Requirements: Accreditation guidelines, security standards, and audit trail requirements.
-    *   General Law: Contract law, consumer protection, data protection, and civil procedure.
-    *   Government Forms: Templates for business registration, tax, and permits.
-*   **Regional Law:**
-    *   South Africa: Electronic Communications and Transactions Act (ECTA) 2002, FICA requirements, and Consumer Protection Act.
-    *   Botswana: Electronic Records Act and contract law.
-    *   SADC Standards: Digital signature framework and cross-border recognition.
-*   **International Law:**
-    *   UNCITRAL Model Law on Electronic Commerce.
-    *   eIDAS Regulation Summary.
-    *   ISO Standards (placeholders for 27001 and 14533).
-    *   Best practices for digital signatures and legal compliance.
-
-### AI Knowledge Base Components
-
-*   **LlamaIndex Integration:** The knowledge base is integrated with LlamaIndex to provide a powerful semantic search and retrieval engine.
-*   **Legal Document Structures:** JSON files defining the structure of legal documents, required clauses, and compliance requirements.
-*   **Clause Library:** A library of pre-vetted legal clauses for various contract types.
-*   **Compliance Rules:** A set of rules for validating documents against ETA 2019, CRAN, and other legal frameworks.
-*   **Legal Precedents:** A collection of Namibian and regional case law related to electronic signatures and contracts.
-*   **Government Integration:** A knowledge base of Namibian government systems and integration requirements.
-*   **AI Training Data:** A set of prompts and training data for fine-tuning the AI models.
-*   **Legal Dictionary:** A dictionary of legal terms and definitions.
-*   **Compliance Checklists:** Checklists for verifying compliance with various legal frameworks.
-*   **Maintenance Scripts:** Scripts for maintaining and updating the knowledge base.
-
-
-## 🔒 Security & Compliance
-
-### ✅ Security Audit Status
-- **🔴 HIGH severity issues**: 0
-- **🟡 MEDIUM severity issues**: 0
-- **📝 Total issues**: 0
-- **Status**: ✅ SECURITY AUDIT PASSED
-
-### Security Features
-- **🔐 Environment Variables**: All secrets properly managed via `.env` files
-- **🛡️ JWT Security**: Secure token management with environment-based secrets
-- **🔍 Security Monitoring**: Automated security audit script included
-- **📋 Compliance**: Full ETA 2019 and CRAN accreditation support
-
-### Row Level Security (RLS)
-- ✅ All 17 tables have RLS enabled
-- ✅ User-specific data access policies
-- ✅ Document sharing controls
-- ✅ API key restrictions
-
-### ETA 2019 Compliance
-- ✅ Section 17: Legal recognition of data messages
-- ✅ Section 20: Electronic signature requirements
-- ✅ Section 21: Original information integrity
-- ✅ Section 24: Electronic record retention
-
-### CRAN Accreditation Features
-- ✅ Security service provider status tracking
-- ✅ Digital certificate authority capabilities
-- ✅ Compliance database maintenance
-- ✅ Security audit support
-
-### Security Documentation
-- 📖 [Security Guide](SECURITY.md) - Comprehensive security documentation
-- 🔍 [Security Audit Script](scripts/security_audit.py) - Automated security scanning
-- 📋 [Environment Setup](apps/api/.env.example) - Secure configuration template
-
-## 🤖 AI-Powered Features
-
-The AI features in BuffrSign are powered by a comprehensive legal knowledge base, ensuring that the analysis and recommendations are accurate and up-to-date.
-
-### LlamaIndex Integration
-- **Document Intelligence**: Automatic extraction of key clauses and information
-- **Smart Template Generation**: AI-generated templates based on Namibian law
-- **Compliance Automation**: Real-time ETA 2019 and CRAN compliance checking
-- **Risk Assessment**: Automated identification of legal and compliance risks
-- **Signature Field Detection**: AI-powered optimal signature placement suggestions
-
-### AI Services Architecture
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   BuffrSign     │    │   LlamaIndex    │    │   Document      │
-│   Core Platform │◄──►│   AI Engine     │◄──►│   Intelligence  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Signature     │    │   Agentic       │    │   Compliance    │
-│   Workflows     │    │   Workflows     │    │   Automation    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
-## 💰 Subscription Plans
-
-| Plan | Monthly | Yearly | Documents | Users | Features |
-|------|---------|--------|-----------|-------|----------|
-| Individual | N$150 | N$1,500 | 5 | 1 | Simple signatures, basic templates |
-| Small Business | N$400 | N$4,000 | 50 | 5 | Advanced signatures, bulk signing |
-| Enterprise | N$1,200 | N$12,000 | 500 | 25 | Qualified signatures, CRAN compliance |
-| Government | N$2,000 | N$20,000 | 1,000 | 50 | Government integration, 24/7 support |
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+
-- Python 3.11+
-- Docker & Docker Compose
-- Supabase account
+
+- Node.js 18+ and npm
+- PostgreSQL 14+
+- Redis 6+
+- OpenAI API key
+- AWS account (for document storage)
 
 ### Installation
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/thependalorian/buffrsign-platform.git
-cd buffrsign-platform
+git clone https://github.com/buffsign/platform.git
+cd platform
 ```
 
-2. **Set up environment variables**
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Set up environment variables**
 ```bash
 cp .env.example .env
-# Edit .env with your Supabase credentials
+# Edit .env with your configuration
 ```
 
-3. **Install dependencies**
+4. **Set up the database**
 ```bash
-# Frontend
-cd apps/web
-npm install
+# Create PostgreSQL database
+createdb buffsign_dev
 
-# Backend
-cd ../api
-pip install -r requirements.txt
+# Run migrations (if you have them)
+npm run migrate
 ```
 
-4. **Start development servers**
+5. **Start Redis**
 ```bash
-# Frontend (Next.js)
-cd apps/web
+redis-server
+```
+
+6. **Start the development server**
+```bash
 npm run dev
-
-# Backend (FastAPI)
-cd ../api
-uvicorn app:app --reload
 ```
 
-5. **Access the application**
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
+The platform will be available at `http://localhost:3000`
 
-## 📱 Frontend Features
+### Environment Configuration
 
-### Implemented Pages (17/17)
-- ✅ **Landing Page** - Marketing site with feature overview
-- ✅ **Authentication** - Login, registration, password reset
-- ✅ **Dashboard** - User dashboard with quick stats and recent documents
-- ✅ **Document Management** - Upload, view, edit, and manage documents
-- ✅ **Signature Workflow** - Complete signing process with audit trails
-- ✅ **Templates** - Template library and smart template generation
-- ✅ **Settings** - User preferences and account management
-- ✅ **Admin Panel** - Enterprise and government administration
-- ✅ **Analytics** - Usage analytics and compliance reporting
-- ✅ **Mobile Responsive** - Optimized for all device sizes
+Key environment variables to configure:
 
-### UI/UX Features
-- **Modern Design**: DaisyUI components with custom design system
-- **Accessibility**: WCAG 2.1 AA compliant
-- **Dark Mode**: Full dark mode support
-- **Responsive**: Mobile-first design approach
-- **Performance**: Optimized for fast loading and smooth interactions
-
-## 🔧 Backend Features
-
-### API Endpoints
-- **Authentication**: JWT-based authentication with Supabase
-- **Document Management**: Upload, process, and manage documents
-- **Signature Processing**: Digital signature creation and verification
-- **Template System**: Template creation and management
-- **AI Integration**: LlamaIndex-powered document analysis
-- **Compliance**: ETA 2019 and CRAN compliance checking
-- **Audit Trail**: Complete activity logging
-
-### AI Services
-- **Document Intelligence**: Automatic clause extraction and analysis
-- **Smart Templates**: AI-generated templates for Namibian law
-- **Compliance Checking**: Real-time ETA 2019 compliance verification
-- **Risk Assessment**: Automated legal risk identification
-- **Signature Optimization**: AI-powered signature field placement
-
-## 🗄️ Database Features
-
-### Supabase Integration
-- **PostgreSQL 17.4.1**: Latest stable database version
-- **Row Level Security**: Comprehensive data protection
-- **Real-time Features**: Live updates and notifications
-- **Edge Functions**: Serverless backend functions
-- **Storage**: Secure file storage with encryption
-
-### Security Policies
-- **User Isolation**: Users can only access their own data
-- **Document Sharing**: Controlled document sharing between users
-- **API Security**: Rate limiting and authentication
-- **Audit Logging**: Complete activity tracking
-
-## 🚀 Deployment Options
-
-### Option 1: Vercel + Railway (Recommended)
 ```bash
-# Frontend deployment to Vercel
-vercel --prod
+# AI Configuration
+OPENAI_API_KEY=your_openai_api_key
 
-# Backend deployment to Railway
-railway up
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/buffsign_dev
+
+# Storage
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+STORAGE_BUCKET=your-s3-bucket
+
+# Security
+JWT_SECRET=your-secure-jwt-secret
 ```
 
-### Option 2: Docker + DigitalOcean
+## 📖 API Documentation
+
+### Authentication
+
+All API endpoints require authentication except for public signing links.
+
 ```bash
-# Build and deploy with Docker
-docker-compose -f docker-compose.prod.yml up -d
+# Register a new user
+POST /api/auth/register
+{
+  "email": "user@example.com",
+  "name": "John Doe",
+  "password": "secure_password",
+  "role": "individual"
+}
+
+# Login
+POST /api/auth/login
+{
+  "email": "user@example.com", 
+  "password": "secure_password"
+}
 ```
 
-### Option 3: Kubernetes
+### Document Management
+
 ```bash
-# Deploy to Kubernetes cluster
-kubectl apply -f infrastructure/kubernetes/
+# Upload document
+POST /api/documents/upload
+Content-Type: multipart/form-data
+file: [document file]
+title: "Service Agreement"
+autoAnalyze: true
+
+# Get document
+GET /api/documents/:id
+
+# Send for signing
+POST /api/documents/:id/send
+{
+  "parties": [
+    {
+      "email": "client@example.com",
+      "name": "Client Name",
+      "role": "Client"
+    }
+  ],
+  "workflowType": "sequential",
+  "message": "Please review and sign this document"
+}
 ```
 
-## 📊 Performance Metrics
+### AI Integration
 
-### Current Performance
-- **Frontend Build Time**: ~30 seconds
-- **Bundle Size**: 87.1 kB (optimized)
-- **API Response Time**: <200ms average
-- **Database Queries**: <50ms average
-- **Document Processing**: <5 seconds for 50MB files
+```bash
+# AI Chat
+POST /api/ai/chat
+{
+  "message": "How do I add signature fields?",
+  "context": {
+    "documentId": "doc_123"
+  }
+}
 
-### Scalability
-- **Concurrent Users**: 10,000+ supported
-- **Documents/Month**: 1M+ capacity
-- **Storage**: Unlimited with cloud scaling
-- **Geographic**: Multi-region deployment ready
+# Workflow Optimization
+POST /api/ai/optimize-workflow
+{
+  "documentId": "doc_123",
+  "parties": [...]
+}
+```
 
-## 🔒 Compliance & Security
+## 🎯 Market Opportunity
 
-### ETA 2019 Compliance
-- **Section 17**: Legal recognition of data messages ✅
-- **Section 20**: Electronic signature requirements ✅
-- **Section 21**: Original information integrity ✅
-- **Section 24**: Electronic record retention ✅
-- **Chapter 4**: Consumer protection ✅
+### Target Market Size
+- **Namibia**: $8.7M by 2027 (55%+ CAGR)
+- **SADC Region**: $180M+ by 2027 (38.4% CAGR)
+- **Primary Target**: SMEs and individual professionals
 
-### CRAN Accreditation
-- **Security Service Provider**: Ready for accreditation
-- **Digital Certificates**: PKI infrastructure in place
-- **Compliance Database**: Complete audit trail system
-- **Security Monitoring**: Real-time threat detection
+### Competitive Advantages
+- **First ETA 2019 compliant platform**
+- **40-60% cost advantage over international players**
+- **AI-powered local optimization**
+- **Mobile-first African market design**
 
-### Security Features
-- **Encryption**: AES-256 encryption at rest and in transit
-- **Authentication**: Multi-factor authentication support
-- **Authorization**: Role-based access control
-- **Audit Trail**: Complete activity logging
-- **Data Protection**: GDPR-style privacy controls
+## 🏛️ Compliance & Legal
 
-## 📚 Documentation
+### Namibian Compliance
+- **ETA 2019**: Full compliance with Electronic Transactions Act 2019
+- **CRAN Accreditation**: Ready for accreditation launch in February 2026
+- **Legal Validity**: Court-admissible electronic signatures
+- **Consumer Protection**: Clear consent and disclosure processes
 
-### Available Documentation
-- **API Documentation**: Complete REST API reference
-- **User Guide**: Step-by-step user instructions
-- **Developer Guide**: Technical implementation details
-- **Compliance Guide**: ETA 2019 and CRAN requirements
-- **Deployment Guide**: Production deployment instructions
+### SADC Regional Support
+- **Cross-Border Recognition**: Signatures valid across SADC member states
+- **Technology Neutral**: Adaptable to current and future technologies
+- **Harmonized Framework**: Consistent with SADC Model Law
 
-### Quick Links
-- [API Documentation](docs/api/README.md)
-- [User Guide](docs/user-guide/README.md)
-- [Developer Guide](docs/developer/README.md)
-- [Compliance Guide](docs/compliance/README.md)
-- [Deployment Guide](docs/deployment/README.md)
+## 🔧 Development
+
+### Project Structure
+
+```
+buffsign-platform/
+├── src/
+│   ├── ai/                 # AI Agent and related services
+│   │   ├── BuffrSignAIAgent.ts
+│   │   ├── ComplianceEngine.ts
+│   │   ├── DocumentProcessor.ts
+│   │   └── WorkflowOptimizer.ts
+│   ├── controllers/        # API route handlers
+│   ├── middleware/         # Express middleware
+│   ├── models/            # Data models
+│   ├── services/          # Business logic services
+│   ├── types/             # TypeScript type definitions
+│   ├── utils/             # Utility functions
+│   └── server.ts          # Main server entry point
+├── frontend/              # React frontend application
+├── tests/                 # Test suites
+├── docs/                  # Documentation
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+### Technology Stack
+
+**Backend:**
+- Node.js + TypeScript
+- Express.js for API
+- Socket.IO for real-time features
+- PostgreSQL for data storage
+- Redis for caching
+- AWS S3 for document storage
+
+**AI & ML:**
+- OpenAI GPT-4 for language processing
+- LlamaIndex for document intelligence
+- Custom compliance validation
+- Workflow optimization algorithms
+
+**Frontend:**
+- React 18 with TypeScript
+- Tailwind CSS for styling
+- React Query for state management
+- WebSocket integration
+
+**Security:**
+- JWT authentication
+- AES-256 encryption
+- PKI infrastructure
+- Comprehensive audit logging
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run specific test suite
+npm run test:ai
+npm run test:compliance
+npm run test:api
+```
+
+### Building for Production
+
+```bash
+# Build both backend and frontend
+npm run build
+
+# Start production server
+npm start
+```
+
+## 📊 Monitoring & Analytics
+
+### Health Checks
+- System health: `/health`
+- AI Agent status: Integrated in health endpoint
+- Database connectivity: Automated monitoring
+- External service status: Real-time tracking
+
+### Logging
+- Structured logging with Winston
+- Audit trails for compliance
+- Performance metrics
+- Security event tracking
+
+### Metrics
+- Document processing rates
+- AI analysis performance
+- Workflow completion rates
+- User engagement analytics
+
+## 🌍 Internationalization
+
+### Supported Languages
+- **English** (Primary)
+- **Afrikaans** (Planned)
+- **Portuguese** (Future - Angola, Mozambique)
+
+### Regional Adaptations
+- Namibian Dollar (NAD) pricing
+- Local time zones (Africa/Windhoek)
+- Regional legal requirements
+- Local business practices
+
+## 📈 Roadmap
+
+### Phase 1: Foundation (Months 1-6)
+- ✅ Core platform architecture
+- ✅ AI agent implementation
+- ✅ ETA 2019 compliance framework
+- ✅ Basic document management
+- 🔄 CRAN accreditation preparation
+
+### Phase 2: Enhancement (Months 6-12)
+- 🔄 Mobile applications (iOS/Android)
+- 📋 Advanced workflow features
+- 📋 Enterprise integrations
+- 📋 Multi-language support
+- 📋 Advanced analytics
+
+### Phase 3: Expansion (Months 12-24)
+- 📋 South Africa launch
+- 📋 Botswana expansion
+- 📋 Zambia market entry
+- 📋 White-label solutions
+- 📋 API marketplace
+
+### Phase 4: Scale (Months 24+)
+- 📋 Full SADC coverage
+- 📋 Enterprise features
+- 📋 Advanced AI capabilities
+- 📋 Blockchain integration
+- 📋 IPO preparation
 
 ## 🤝 Contributing
 
-### Development Guidelines
-- Follow ESLint configuration
-- Write tests for new features
-- Update documentation
-- Ensure ETA 2019 compliance
-- Maintain accessibility standards
+We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
 
-### Code Standards
-- **Frontend**: TypeScript, Next.js 14, DaisyUI
-- **Backend**: Python, FastAPI, LlamaIndex
-- **Database**: PostgreSQL, Supabase
-- **Testing**: Jest, Playwright, Pytest
-
-## 📞 Support
-
-### Contact Information
-- **Email**: support@sign.buffr.ai
-- **Phone**: +264-61-BUFF-SIGN
-- **Business Hours**: Mon-Fri 8AM-6PM WAT
-- **Emergency Support**: 24/7 for Enterprise customers
-
-### Resources
-- **Documentation**: [docs.sign.buffr.ai](https://www.docs.sign.buffr.ai)
-- **Status Page**: [status.sign.buffr.ai](https://www.status.sign.buffr.ai)
-- **GitHub**: [github.com/buffrsign/platform](https://github.com/buffrsign/platform)
-
-## 🎯 Roadmap
-
-### Q1 2025
-- [ ] CRAN accreditation completion
-- [ ] Government portal integration
-- [ ] Mobile app store release
-- [ ] Advanced AI features
-
-### Q2 2025
-- [ ] Regional expansion (South Africa, Botswana)
-- [ ] Advanced analytics dashboard
-- [ ] API marketplace launch
-- [ ] Blockchain integration
-
-### Q3 2025
-- [ ] AI-powered document analysis
-- [ ] Advanced workflow automation
-- [ ] Multi-language support
-- [ ] Enterprise SSO integration
+### Development Setup
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new features
+5. Ensure all tests pass
+6. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is proprietary software. All rights reserved by BuffrSign.
 
-## 🏢 Enterprise
+## 📞 Support
 
-For enterprise deployments, government integration, or custom development:
+### Community Support
+- GitHub Issues: [Report bugs and request features](https://github.com/buffsign/platform/issues)
+- Discussions: [Community forum](https://github.com/buffsign/platform/discussions)
 
-- **Sales**: sales@sign.buffr.ai
-- **Enterprise Support**: enterprise@sign.buffr.ai
-- **Government Relations**: government@sign.buffr.ai
+### Commercial Support
+- Email: support@buffsign.com
+- Phone: +264 61 123 4567 (Namibia)
+- Business Hours: 08:00-17:00 WAT (Monday-Friday)
+
+### Documentation
+- [API Documentation](https://docs.buffsign.com/api)
+- [User Guide](https://docs.buffsign.com/guide)
+- [Compliance Guide](https://docs.buffsign.com/compliance)
+- [Integration Examples](https://docs.buffsign.com/examples)
+
+## 🏆 Awards & Recognition
+
+- **2024**: Namibian Fintech Innovation Award (Planned)
+- **2024**: SADC Digital Transformation Excellence (Planned)
+- **2025**: African AI Innovation Award (Target)
+
+## 📈 Business Metrics
+
+### Current Status (MVP)
+- **Market Research**: ✅ Completed
+- **Legal Framework**: ✅ Compliant
+- **AI Engine**: ✅ Operational
+- **Platform**: ✅ MVP Ready
+- **CRAN Preparation**: 🔄 In Progress
+
+### Target Metrics (Year 1)
+- **Users**: 5,000+ active users
+- **Documents**: 50,000+ processed
+- **Market Share**: 5% of Namibian market
+- **Revenue**: N$1.2M ARR
+
+### Long-term Goals (Year 5)
+- **Users**: 100,000+ across SADC
+- **Market Share**: 45% in Namibia, 10% SADC
+- **Revenue**: N$25M+ ARR
+- **Countries**: 5 SADC markets
 
 ---
 
-**BuffrSign** - Empowering Namibia's Digital Transformation 🇳🇦
+**Built with ❤️ for the Namibian and SADC business community**
 
-*Built with ❤️ for Southern Africa*
+*Empowering digital transformation across Africa, one signature at a time.*
