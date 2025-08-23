@@ -1,147 +1,238 @@
 version: '3.8'
 
 services:
-  # BuffrSign API Service
-  buffrsign-api:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: buffsign-postgres
+    environment:
+      POSTGRES_DB: buffsign
+      POSTGRES_USER: buffsign
+      POSTGRES_PASSWORD: buffsign_password_change_me
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - buffsign-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U buffsign -d buffsign"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: buffsign-redis
+    command: redis-server --requirepass buffsign_redis_password_change_me
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - buffsign-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MinIO (S3-compatible storage for development)
+  minio:
+    image: minio/minio:latest
+    container_name: buffsign-minio
+    environment:
+      MINIO_ROOT_USER: buffsign
+      MINIO_ROOT_PASSWORD: buffsign_minio_password_change_me
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - buffsign-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # BuffrSign Backend API
+  api:
     build:
       context: .
-      dockerfile: ./apps/api/Dockerfile
-    container_name: buffrsign-api
-    restart: always
-    ports:
-      - "8003:8003"
+      dockerfile: Dockerfile
+    container_name: buffsign-api
     environment:
-      # Environment Configuration
-      - ENVIRONMENT=${ENVIRONMENT:-production}
-      - BUFFRSIGN_API_KEY=${BUFFRSIGN_API_KEY}
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://buffsign:buffsign_password_change_me@postgres:5432/buffsign
+      REDIS_URL: redis://redis:6379
+      REDIS_PASSWORD: buffsign_redis_password_change_me
       
-      # Domain Configuration
-      - DOMAIN=sign.buffr.ai
-      - API_URL=https://api.sign.buffr.ai
-      - FRONTEND_URL=https://sign.buffr.ai
-      - CORS_ORIGINS=${CORS_ORIGINS:-https://sign.buffr.ai,https://www.sign.buffr.ai,http://localhost:3000}
-      
-      # Database Configuration
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
-      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      # Storage (using MinIO for development)
+      STORAGE_PROVIDER: aws
+      STORAGE_BUCKET: buffsign-documents
+      STORAGE_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: buffsign
+      AWS_SECRET_ACCESS_KEY: buffsign_minio_password_change_me
+      AWS_ENDPOINT_URL: http://minio:9000
+      AWS_S3_FORCE_PATH_STYLE: "true"
       
       # AI Configuration
-      - LLAMAINDEX_ENABLE=${LLAMAINDEX_ENABLE:-1}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4}
-      - OPENAI_EMBEDDING_MODEL=${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
-      - OPENAI_TEMPERATURE=${OPENAI_TEMPERATURE:-0.1}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-your_openai_api_key_here}
+      EMBEDDING_MODEL: text-embedding-3-small
+      CHAT_MODEL: gpt-4-turbo-preview
       
-      # Security Configuration
-      - JWT_SECRET=${JWT_SECRET}
-      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
-      - HASH_SALT_ROUNDS=${HASH_SALT_ROUNDS:-12}
+      # Security
+      JWT_SECRET: buffsign_jwt_secret_change_me_in_production
+      JWT_EXPIRES_IN: 24h
+      BCRYPT_ROUNDS: 12
       
-      # Email Configuration
-      - SMTP_HOST=${SMTP_HOST}
-      - SMTP_PORT=${SMTP_PORT:-587}
-      - SMTP_USER=${SMTP_USER}
-      - SMTP_PASS=${SMTP_PASS}
+      # Email (using development settings)
+      EMAIL_PROVIDER: smtp
+      EMAIL_FROM: noreply@buffsign.local
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
+      SMTP_USER: ""
+      SMTP_PASS: ""
       
-      # File Upload Configuration
-      - MAX_FILE_SIZE=${MAX_FILE_SIZE:-10485760}  # 10MB
-      - UPLOAD_DIR=${UPLOAD_DIR:-/app/uploads}
+      # SMS (development - will not actually send)
+      TWILIO_ACCOUNT_SID: test_account_sid
+      TWILIO_AUTH_TOKEN: test_auth_token
+      TWILIO_FROM: "+1234567890"
       
-      # Rate Limiting
-      - RATE_LIMIT_REQUESTS=${RATE_LIMIT_REQUESTS:-100}
-      - RATE_LIMIT_WINDOW=${RATE_LIMIT_WINDOW:-3600}
+      # Compliance
+      ETA_2019_ENABLED: "true"
+      ETA_2019_STRICT_MODE: "false"
+      SADC_ENABLED: "true"
+      SADC_COUNTRIES: "NA,ZA,BW,ZM,ZW"
       
-      # Feature Flags
-      - ENABLE_AI_FEATURES=${ENABLE_AI_FEATURES:-true}
-      - ENABLE_SMART_TEMPLATES=${ENABLE_SMART_TEMPLATES:-true}
-      - ENABLE_COMPLIANCE_AI=${ENABLE_COMPLIANCE_AI:-true}
-      - ENABLE_DOCUMENT_INTELLIGENCE=${ENABLE_DOCUMENT_INTELLIGENCE:-true}
+      # CORS
+      CORS_ORIGIN: "http://localhost:5173,http://localhost:3000"
       
-      # Monitoring
-      - SENTRY_DSN=${SENTRY_DSN}
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-    volumes:
-      - buffrsign-uploads:/app/uploads
-      - buffrsign-logs:/app/logs
-    healthcheck:
-      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8003/health', timeout=5)"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    networks:
-      - buffrsign-network
-
-  # BuffrSign Frontend Service
-  buffrsign-frontend:
-    build:
-      context: ./apps/web
-      dockerfile: Dockerfile
-    container_name: buffrsign-frontend
-    restart: always
+      # Logging
+      LOG_LEVEL: debug
+      
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=${NODE_ENV:-production}
-      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
-      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-      - NEXT_PUBLIC_API_KEY=${NEXT_PUBLIC_API_KEY}
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - buffsign-network
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 20s
-    networks:
-      - buffrsign-network
-    depends_on:
-      - buffrsign-api
 
-  # Caddy Reverse Proxy
-  caddy:
-    image: caddy:2-alpine
-    container_name: buffrsign-caddy
-    restart: always
+  # Frontend (React/Vite development server)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: buffsign-frontend
+    environment:
+      VITE_API_URL: http://localhost:3000/api
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - api
+    networks:
+      - buffsign-network
+
+  # MailHog (Email testing)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: buffsign-mailhog
+    ports:
+      - "1025:1025"  # SMTP server
+      - "8025:8025"  # Web UI
+    networks:
+      - buffsign-network
+
+  # Nginx (Reverse Proxy for production-like setup)
+  nginx:
+    image: nginx:alpine
+    container_name: buffsign-nginx
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
-      - AGENT_API_HOSTNAME=${AGENT_API_HOSTNAME:-api.sign.buffr.ai}
-      - FRONTEND_HOSTNAME=${FRONTEND_HOSTNAME:-sign.buffr.ai}
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy-data:/data
-      - caddy-config:/config
-    networks:
-      - buffrsign-network
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
     depends_on:
-      - buffrsign-api
-      - buffrsign-frontend
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:2019/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-    cap_drop:
-      - ALL
-    cap_add:
-      - NET_BIND_SERVICE
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1m"
-        max-file: "1"
+      - api
+      - frontend
+    networks:
+      - buffsign-network
+
+  # Prometheus (Metrics collection)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: buffsign-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - buffsign-network
+    profiles:
+      - monitoring
+
+  # Grafana (Metrics visualization)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: buffsign-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+    networks:
+      - buffsign-network
+    profiles:
+      - monitoring
 
 networks:
-  buffrsign-network:
+  buffsign-network:
     driver: bridge
 
 volumes:
-  buffrsign-uploads:
-  buffrsign-logs:
-  caddy-data:
-  caddy-config:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  minio_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
